@@ -2,10 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>PoloTube - Recommandations</title>
+  <title>PoloTube</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Styles rapides pour la barre de recherche */
     #search-container {
       max-width: 900px;
       margin: 20px auto;
@@ -39,11 +38,11 @@
   </style>
 </head>
 <body>
-  <h1>Recommandations PoloTube</h1>
+  <h1>PoloTube</h1>
 
   <div id="search-container">
-    <input type="text" id="search-input" placeholder="Rechercher une vidéo..." />
-    <button id="search-btn">Rechercher</button>
+    <input type="text" id="search-input" placeholder="Search videos..." />
+    <button id="search-btn">Search</button>
   </div>
 
   <div id="videos"></div>
@@ -63,7 +62,7 @@
       const videosDiv = document.getElementById('videos');
       videosDiv.innerHTML = ''; // reset
       if (videos.length === 0) {
-        videosDiv.innerHTML = '<p>Aucune vidéo trouvée.</p>';
+        videosDiv.innerHTML = '<p>No videos.</p>';
         return;
       }
       videos.forEach(video => {
@@ -72,7 +71,7 @@
         div.innerHTML = `
           <img src="${video.thumbnail}" alt="${video.title}" width="320" />
           <h3>${video.title}</h3>
-          <p>Chaîne: ${video.channel}</p>
+          <p>Channel: ${video.channel}</p>
         `;
         div.onclick = () => window.location.href = `/video?id=${video.id}`;
         videosDiv.appendChild(div);
