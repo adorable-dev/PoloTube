@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>PoloTube - Chaîne YouTube</title>
+  <title>PoloTube - Channel</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     .container {
@@ -61,9 +61,9 @@
 <body>
   <div class="container">
     <div class="back-btn" onclick="window.history.back()">← Retour</div>
-    <h1>Chaîne YouTube</h1>
+    <h1>YouTube Channel</h1>
     <div id="channel-info"></div>
-    <h2>Vidéos de la chaîne</h2>
+    <h2>Channel videos</h2>
     <div id="channel-videos"></div>
   </div>
 
@@ -73,7 +73,7 @@
     const channelName = urlParams.get('name');
 
     if (!channelId && !channelName) {
-      document.body.innerHTML = '<p>ID ou nom de chaîne manquant.</p>';
+      document.body.innerHTML = '<p>No channel</p>';
     } else {
       async function fetchChannelData() {
         let url;
@@ -85,7 +85,7 @@
 
         try {
           const res = await fetch(url);
-          console.log('Requête API →', url, '→ statut:', res.status);
+          console.log('API Request', url, '→ statut:', res.status);
           if (!res.ok) {
             const text = await res.text();
             throw new Error(`Statut ${res.status} : ${text}`);
@@ -94,7 +94,7 @@
           const channelData = await res.json();
 
           if (!channelData || !channelData.title) {
-            document.body.innerHTML = '<p>Chaîne introuvable.</p>';
+            document.body.innerHTML = '<p>Can't find channel.</p>';
             return;
           }
 
@@ -105,7 +105,7 @@
               <img src="${channelData.thumbnail}" alt="${channelData.title}" />
               <div class="channel-info">
                 <h3>${channelData.title}</h3>
-                <p>${channelData.subscriberCount} abonnés</p>
+                <p>${channelData.subscriberCount} subscribers</p>
                 <p>${channelData.description || ''}</p>
               </div>
             </div>
@@ -129,11 +129,11 @@
               videosDiv.appendChild(vidDiv);
             });
           } else {
-            videosDiv.innerHTML = '<p>Aucune vidéo trouvée pour cette chaîne.</p>';
+            videosDiv.innerHTML = '<p>No videos.</p>';
           }
         } catch (err) {
           console.error('Erreur de récupération :', err);
-          document.body.innerHTML = `<p><strong>Erreur :</strong> ${err.message}</p>`;
+          document.body.innerHTML = `<p><strong>Error :</strong> ${err.message}</p>`;
         }
       }
 
