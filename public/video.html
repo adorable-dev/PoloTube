@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>PoloTube - Lecture vidéo</title>
+  <title>PoloTube - Watch</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     iframe {
@@ -33,7 +33,7 @@
 <body>
 
   <div class="video-player-container">
-    <div class="back-btn" onclick="window.history.back()">← Retour</div>
+    <div class="back-btn" onclick="window.history.back()">← Back</div>
     <div id="player"></div>
     <h2 id="title"></h2>
     <p id="channel"></p>
@@ -41,12 +41,11 @@
   </div>
 
   <script>
-    // Récupérer id vidéo depuis l’URL : ?id=XXXXX
     const urlParams = new URLSearchParams(window.location.search);
     const videoId = urlParams.get('id');
 
     if (!videoId) {
-      document.body.innerHTML = '<p>Pas de vidéo sélectionnée.</p>';
+      document.body.innerHTML = '<p>No videos.</p>';
     } else {
       // Construire iframe YouTube
       const playerDiv = document.getElementById('player');
@@ -59,7 +58,6 @@
         ></iframe>
       `;
 
-      // Fetch info vidéo depuis ton backend (API YouTube)
       fetch(`/api/recommendations`)
         .then(res => res.json())
         .then(videos => {
@@ -67,19 +65,16 @@
           if (video) {
             document.getElementById('title').textContent = video.title;
 
-            // Toujours créer un lien cliquable vers la chaîne
             if (video.channelId) {
-              // si on a l’ID chaîne, lien avec id
-              document.getElementById('channel').innerHTML = `Chaîne: <a href="/channel?id=${video.channelId}">${video.channel}</a>`;
+              document.getElementById('channel').innerHTML = `Channel: <a href="/channel?id=${video.channelId}">${video.channel}</a>`;
             } else {
-              // sinon lien avec le nom de chaîne encodé en paramètre
               const channelNameEncoded = encodeURIComponent(video.channel);
-              document.getElementById('channel').innerHTML = `Chaîne: <a href="/channel?name=${channelNameEncoded}">${video.channel}</a>`;
+              document.getElementById('channel').innerHTML = `Channel: <a href="/channel?name=${channelNameEncoded}">${video.channel}</a>`;
             }
 
-            document.getElementById('views').textContent = `${Number(video.views).toLocaleString()} vues`;
+            document.getElementById('views').textContent = `${Number(video.views).toLocaleString()} views`;
           } else {
-            document.getElementById('title').textContent = 'Vidéo inconnue';
+            document.getElementById('title').textContent = 'Unknown video.';
           }
         });
     }
