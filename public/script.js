@@ -25,7 +25,7 @@ async function fetchRecommendations() {
       container.appendChild(div);
     });
   } catch (err) {
-    console.error('Erreur lors du chargement des vidéos', err);
+    console.error('Error while fetching video', err);
   }
 }
 
