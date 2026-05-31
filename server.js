@@ -7,6 +7,7 @@ const youtubeRoutes = require('./routes/youtube');
 const playlistRoutes = require('./routes/playlist');
 const recommendationsRoutes = require('./routes/recommendations');
 const searchRoutes = require('./routes/search');
+const videoRoutes = require('./routes/video');
 
 
 dotenv.config();
@@ -20,8 +21,9 @@ app.use('/api/youtube', youtubeRoutes);
 app.use('/api/playlist', playlistRoutes);
 app.use('/api/recommendations', recommendationsRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/video', videoRoutes);
 
-// Servir fichiers statiques dans /public
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Pages frontend
