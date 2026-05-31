@@ -49,12 +49,15 @@
   <div id="videos"></div>
 
   <script>
-    // Exemple minimal : on récupère les vidéos depuis /api/recommendations (ou script.js)
-    async function loadVideos() {
-      const res = await fetch('/api/recommendations');
-      const videos = await res.json();
-      return videos;
-    }
+  async function loadRecommendations() {
+    const res = await fetch('/api/recommendations');
+    return await res.json();
+  }
+  
+  async function searchVideos(query) {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    return await res.json();
+  }
 
     function renderVideos(videos) {
       const videosDiv = document.getElementById('videos');
@@ -76,24 +79,39 @@
       });
     }
 
-    async function init() {
-      const videos = await loadVideos();
-      renderVideos(videos);
-
-      const input = document.getElementById('search-input');
-      const btn = document.getElementById('search-btn');
-
-      function filterVideos() {
-        const query = input.value.toLowerCase();
-        const filtered = videos.filter(v => v.title.toLowerCase().includes(query));
-        renderVideos(filtered);
+  async function init() {
+    let videos = await loadRecommendations();
+    renderVideos(videos);
+  
+    const input = document.getElementById('search-input');
+    const btn = document.getElementById('search-btn');
+  
+    async function update() {
+      const query = input.value.trim();
+  
+      if (query === "") {
+        videos = await loadRecommendations();
+      } else {
+        videos = await searchVideos(query);
       }
-
-      btn.addEventListener('click', filterVideos);
-      input.addEventListener('keyup', e => {
-        if (e.key === 'Enter') filterVideos();
-      });
+  
+      renderVideos(videos);
     }
+  
+    btn.addEventListener('click', update);
+  
+    input.addEventListener('keyup', e => {
+      if (e.key === 'Enter') update();
+    });
+  
+    // bonus: retour aux recommandations quand on efface
+    input.addEventListener('input', async () => {
+      if (input.value.trim() === "") {
+        videos = await loadRecommendations();
+        renderVideos(videos);
+      }
+    });
+  }
 
     init();
   </script>
