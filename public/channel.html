@@ -94,7 +94,7 @@
           const channelData = await res.json();
 
           if (!channelData || !channelData.title) {
-            document.body.innerHTML = '<p>Can't find channel.</p>';
+            document.body.innerHTML = "<p>Can't find channel.</p>";
             return;
           }
 
