@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Recommandations PoloTube</title>
+  <title>PoloTube</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     .video { margin-bottom: 20px; cursor: pointer; }
@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <h1>Recommandations PoloTube</h1>
+  <h1>PoloTube</h1>
   <div id="videos"></div>
 
   <script>
@@ -30,7 +30,7 @@
             <img src="${video.thumbnail}" alt="${video.title}" />
             <h3>${video.title}</h3>
             <p>${video.channel}</p>
-            <p>${Number(video.views).toLocaleString()} vues</p>
+            <p>${Number(video.views).toLocaleString()} views</p>
           `;
           div.onclick = () => {
             window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank');
@@ -38,7 +38,7 @@
           container.appendChild(div);
         });
       } catch (err) {
-        console.error('Erreur lors du chargement des vidéos', err);
+        console.error('Error while fetching videos', err);
       }
     }
 
